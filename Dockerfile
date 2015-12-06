@@ -39,8 +39,8 @@ RUN mv /data/solr/collection1 /data/solr/citeseerx \
  && mkdir -p /usr/local/tomcat-solr/webapps/solr/WEB-INF
 ADD web.xml /usr/local/tomcat-solr/webapps/solr/WEB-INF/web.xml
 
-RUN groupadd solr && useradd -M -s /bin/nologin -g solr -d /usr/local/tomcat-solr solr
- && chown -R solr:solr /usr/local/tomcat-solr
+RUN groupadd solr && useradd -M -s /bin/nologin -g solr -d /usr/local/tomcat-solr solr \
+ && chown -R solr:solr /usr/local/tomcat-solr \
  && chown -R solr:solr /data/solr
 
 RUN cd && wget http://apache.openmirror.de//ant/binaries/apache-ant-1.9.6-bin.tar.gz \
