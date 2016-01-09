@@ -1,7 +1,7 @@
 FROM centos:6
 
 RUN yum update -y && yum install -y \
-        wget tar unzip perl mysql-server mysql-devel git
+        wget tar unzip perl mysql-server mysql-devel git patch
 
 RUN cd && wget --no-cookies --no-check-certificate --header \
         "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
@@ -35,9 +35,12 @@ RUN cd && wget http://apache.openmirror.de/lucene/solr/4.10.4/solr-4.10.4.tgz \
  && rm -rf solr-4.10.4
 
 RUN mv /data/solr/collection1 /data/solr/citeseerx \
- && echo 'name=citeseerx' > /data/solr/citeseerx/core.properties \
- && mkdir -p /usr/local/tomcat-solr/webapps/solr/WEB-INF
-ADD web.xml /usr/local/tomcat-solr/webapps/solr/WEB-INF/web.xml
+ && echo 'name=citeseerx' > /data/solr/citeseerx/core.properties
+
+ADD web.xml.patch /tmp/web.xml.patch
+RUN /usr/local/tomcat-solr/bin/startup.sh && /usr/local/tomcat-solr/bin/shutdown.sh \
+ && patch /usr/local/tomcat-solr/webapps/solr/WEB-INF/web.xml /tmp/web.xml.patch \
+ && rm -f /tmp/web.xml.patch
 
 RUN groupadd solr && useradd -M -s /bin/nologin -g solr -d /usr/local/tomcat-solr solr \
  && chown -R solr:solr /usr/local/tomcat-solr \
