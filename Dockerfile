@@ -16,18 +16,18 @@ RUN cd && wget https://dev.mysql.com/get/mysql57-community-release-el6-7.noarch.
  && yum update -y
 ADD my.cnf /etc/my.cnf
 
-RUN cd && wget http://apache.openmirror.de/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz \
+RUN cd && wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz \
  && mkdir -p /usr/local/tomcat \
  && tar -zxvf apache-tomcat-7.0.65.tar.gz -C /usr/local/tomcat --strip-components=1 \
  && rm -f apache-tomcat-7.0.65.tar.gz
 ENV CATALINA_HOME=/usr/local/tomcat
 
-RUN cd && wget http://apache.openmirror.de/tomcat/tomcat-8/v8.0.29/bin/apache-tomcat-8.0.29.tar.gz \
+RUN cd && wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.29/bin/apache-tomcat-8.0.29.tar.gz \
  && mkdir -p /usr/local/tomcat-solr \
  && tar -zxvf apache-tomcat-8.0.29.tar.gz -C /usr/local/tomcat-solr --strip-components=1 \
  && rm -f apache-tomcat-8.0.29.tar.gz
 
-RUN cd && wget http://apache.openmirror.de/lucene/solr/4.10.4/solr-4.10.4.tgz \
+RUN cd && wget http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.tgz \
  && tar -zxvf solr-4.10.4.tgz && rm -f solr-4.10.4.tgz \
  && cp solr-4.10.4/dist/solr-4.10.4.war /usr/local/tomcat-solr/webapps/solr.war \
  && cp solr-4.10.4/example/lib/ext/*.jar /usr/local/tomcat-solr/lib/ \
@@ -46,12 +46,12 @@ RUN groupadd solr && useradd -M -s /bin/nologin -g solr -d /usr/local/tomcat-sol
  && chown -R solr:solr /usr/local/tomcat-solr \
  && chown -R solr:solr /data/solr
 
-RUN cd && wget http://apache.openmirror.de//ant/binaries/apache-ant-1.9.6-bin.tar.gz \
+RUN cd && wget http://archive.apache.org/dist/ant/binaries/apache-ant-1.9.6-bin.tar.gz \
  && tar -zxvf apache-ant-1.9.6-bin.tar.gz -C /opt \
  && rm -f apache-ant-1.9.6-bin.tar.gz
 ENV PATH=/opt/apache-ant-1.9.6/bin:$PATH
 
-RUN cd && wget http://apache.openmirror.de/axis/axis2/java/core/1.6.3/axis2-1.6.3-war.zip \
+RUN cd && wget http://archive.apache.org/dist/axis/axis2/java/core/1.6.3/axis2-1.6.3-war.zip \
  && unzip axis2-1.6.3-war.zip && rm -f axis2-1.6.3-war.zip \
  && mv axis2.war /usr/local/tomcat/webapps/ \
  && rm -f LICENSE.txt NOTICE.txt README.txt release-notes.html
