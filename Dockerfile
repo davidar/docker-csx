@@ -38,7 +38,7 @@ RUN mv /data/solr/collection1 /data/solr/citeseerx \
  && echo 'name=citeseerx' > /data/solr/citeseerx/core.properties
 
 ADD web.xml.patch /tmp/web.xml.patch
-RUN /usr/local/tomcat-solr/bin/startup.sh && /usr/local/tomcat-solr/bin/shutdown.sh \
+RUN /usr/local/tomcat-solr/bin/startup.sh && sleep 5 && /usr/local/tomcat-solr/bin/shutdown.sh \
  && patch /usr/local/tomcat-solr/webapps/solr/WEB-INF/web.xml /tmp/web.xml.patch \
  && rm -f /tmp/web.xml.patch
 
