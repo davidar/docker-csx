@@ -20,7 +20,6 @@ RUN cd && wget http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.65/bin/apache
  && mkdir -p /usr/local/tomcat \
  && tar -zxvf apache-tomcat-7.0.65.tar.gz -C /usr/local/tomcat --strip-components=1 \
  && rm -f apache-tomcat-7.0.65.tar.gz
-ENV CATALINA_HOME=/usr/local/tomcat
 
 RUN cd && wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.29/bin/apache-tomcat-8.0.29.tar.gz \
  && mkdir -p /usr/local/tomcat-solr \
@@ -38,7 +37,8 @@ RUN mv /data/solr/collection1 /data/solr/citeseerx \
  && echo 'name=citeseerx' > /data/solr/citeseerx/core.properties
 
 ADD web.xml.patch /tmp/web.xml.patch
-RUN /usr/local/tomcat-solr/bin/startup.sh && sleep 5 && /usr/local/tomcat-solr/bin/shutdown.sh \
+ENV CATALINA_PID=/usr/local/tomcat-solr/.pid
+RUN /usr/local/tomcat-solr/bin/startup.sh && sleep 30 && /usr/local/tomcat-solr/bin/shutdown.sh -force \
  && patch /usr/local/tomcat-solr/webapps/solr/WEB-INF/web.xml /tmp/web.xml.patch \
  && rm -f /tmp/web.xml.patch
 
